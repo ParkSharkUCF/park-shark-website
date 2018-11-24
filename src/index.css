@@ -14,15 +14,17 @@ code {
     monospace;
 }
 
-#myProgress {
-  background-color: #000000
+.progress-bar {
+  position: relative;
+  height: 20px;
+  width: 350px;
+  border-radius: 50px;
+  border: 1px solid #333;
 }
 
-#myBar {
-    width: 10%;
-    height: 30px;
-    background-color: #4CAF50;
-    text-align: center; /* To center it horizontally (if you want) */
-    line-height: 30px; /* To center it vertically */
-    color: white;
+.filler {
+  background: #1DA498;
+  height: 100%;
+  border-radius: inherit;
+  transition: width .2s ease-in;
 }

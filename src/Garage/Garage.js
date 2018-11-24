@@ -6,6 +6,7 @@ class Garage extends Component {
     super(props);
     this.state = {
       garage: null,
+      percentage: 0
     };
   }
 
@@ -22,8 +23,6 @@ class Garage extends Component {
       occupied[garage.garage[0].name] += count;
     }
     garage.garage[0].occupied = occupied[garage.garage[0].name];
-
-    console.log(garage.garage[0].occupied)
 
     this.setState({
       garage,
@@ -44,14 +43,26 @@ class Garage extends Component {
             {
               garage.occupied
             }
-            <div id="myProgress">
-              <div id="myBar">{Math.floor((garage.garage[0].occupied/garage.garage[0].totalSpots) * 100)}</div>
+            <div>
+              <ProgressBar percentage={Math.floor((garage.garage[0].occupied/garage.garage[0].totalSpots) * 100)} />
             </div>
           </div>
         </div>
       </div>
     )
   }
+}
+
+const ProgressBar = (props) => {
+  return (
+    <div className="progress-bar">
+      <Filler percentage={props.percentage} />
+    </div>
+  )
+}
+
+const Filler = (props) => {
+  return <div className="filler" style={{ width: `${props.percentage}%` }}/>
 }
 
 export default Garage;
