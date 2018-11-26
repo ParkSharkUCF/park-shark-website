@@ -45,7 +45,7 @@ class Garage extends Component {
             <h5 className="display-3" style={{fontSize: 40 + 'px'}}>Parking Garage {garage.garage[0].name}</h5>
             <p className="lead"></p>
             <hr className="my-4" />
-            <p style={{fontSize: 20 + 'px'}}>{garage.garage[0].occupied} remaining spots out of {garage.garage[0].totalSpots}</p>
+            <p style={{fontSize: 20 + 'px'}}>{garage.garage[0].totalSpots - garage.garage[0].occupied} remaining spots out of {garage.garage[0].totalSpots}</p>
             <div>
               Garage Occupancy : {Math.floor((garage.garage[0].occupied/garage.garage[0].totalSpots) * 100)}%
               <br></br>
