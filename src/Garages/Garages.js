@@ -13,14 +13,16 @@ class Garages extends Component {
 
   async componentDidMount() {
     var garages = (await axios.get('https://murmuring-waters-47073.herokuapp.com/garage')).data;
-    
+
     var occupied = {};
     for(var i = 0; i < garages.garages.length; i++) {
       occupied[garages.garages[i].name] =  0;
       for(var j = 0; j < garages.garages[i].sensors.length; j++) {
         const sensor = (await axios.get(`https://murmuring-waters-47073.herokuapp.com/sensor/${garages.garages[i].sensors[j]}`)).data;
-        var count = sensor.sensor[0].cars;
-        occupied[garages.garages[i].name] = occupied[garages.garages[i].name] + count;
+        if(sensor.sensor.length > 0) {
+          var count = sensor.sensor[0].cars;
+          occupied[garages.garages[i].name] = occupied[garages.garages[i].name] + count;
+        }
       }
       garages.garages[i].occupied = occupied[garages.garages[i].name];
     }

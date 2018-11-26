@@ -20,9 +20,11 @@ class Garage extends Component {
     occupied[garage.garage[0].name] =  0;
     for(var j = 0; j < garage.garage[0].sensors.length; j++) {
       const sensor = (await axios.get(`https://murmuring-waters-47073.herokuapp.com/sensor/${garage.garage[0].sensors[j]}`)).data;
-      var count = sensor.sensor[0].cars;
-      garage.garage[0].spotAval.push(sensor.sensor[0].spots);
-      occupied[garage.garage[0].name] += count;
+      if(sensor.sensor.length > 0) {
+        var count = sensor.sensor[0].cars;
+        garage.garage[0].spotAval.push(sensor.sensor[0].spots);
+        occupied[garage.garage[0].name] += count;
+      }
     }
     garage.garage[0].occupied = occupied[garage.garage[0].name];
 
@@ -40,24 +42,30 @@ class Garage extends Component {
       <div className="container">
         <div className="row">
           <div className="jumbotron col-12">
-            <h5 className="display-3">Parking Garage {garage.garage[0].name}</h5>
+            <h5 className="display-3" style={{fontSize: 40 + 'px'}}>Parking Garage {garage.garage[0].name}</h5>
             <p className="lead"></p>
             <hr className="my-4" />
-            <p>{garage.garage[0].occupied} remaining spots out of {garage.garage[0].totalSpots}</p>
+            <p style={{fontSize: 20 + 'px'}}>{garage.garage[0].occupied} remaining spots out of {garage.garage[0].totalSpots}</p>
+            <div>
+              Garage Occupancy : {Math.floor((garage.garage[0].occupied/garage.garage[0].totalSpots) * 100)}%
+              <br></br>
+              <ProgressBar percentage={Math.floor((garage.garage[0].occupied/garage.garage[0].totalSpots) * 100)} />
+            </div>
             <hr className="my-4" />
+            <p><b>Spot Availability</b></p>
             <div>
             {
               garage.garage[0].spotAval.map(spots => (
                 spots.map(spot => (
-                  <p>Spot {spot.spotID}: {spot.occupied} </p>
+                  <p>Spot {spot.spotID}: {
+                    spot.occupied ?
+                      (<p>Occupied</p>) : (<p>Available</p>)
+                  } </p>
                 ))
               ))
             }
             </div>
 
-            <div>
-              <ProgressBar percentage={Math.floor((garage.garage[0].occupied/garage.garage[0].totalSpots) * 100)} />
-            </div>
           </div>
         </div>
       </div>
