@@ -15,20 +15,23 @@ class Garage extends Component {
     const garage = (await axios.get(`https://murmuring-waters-47073.herokuapp.com/garage/${params.garageName}`)).data;
 
     var occupied = {};
-    garage.garage[0].spotAval = []
+    garage.garage[0].spotAval = [];
+    garage.garage[0].floorAval = [0, 0, 0, 0];
 
     occupied[garage.garage[0].name] =  0;
     for(var j = 0; j < garage.garage[0].sensors.length; j++) {
       const sensor = (await axios.get(`https://murmuring-waters-47073.herokuapp.com/sensor/${garage.garage[0].sensors[j]}`)).data;
+      //array[sensor.sensor[0].floor - 1] += sensor.sensor[0].cars;
       if(sensor.sensor.length > 0) {
         var count = sensor.sensor[0].cars;
         garage.garage[0].spotAval.push(sensor.sensor[0].spots);
         occupied[garage.garage[0].name] += count;
+        garage.garage[0].floorAval[sensor.sensor[0].floor - 1] += count;
       }
     }
     garage.garage[0].occupied = occupied[garage.garage[0].name];
 
-    console.log(garage.garage[0].spotAval)
+    console.log(garage.garage[0].floorAval)
 
     this.setState({
       garage,
@@ -50,7 +53,17 @@ class Garage extends Component {
               Garage Occupancy : {Math.floor((garage.garage[0].occupied/garage.garage[0].totalSpots) * 100)}%
               <br></br>
               <ProgressBar percentage={Math.floor((garage.garage[0].occupied/garage.garage[0].totalSpots) * 100)} />
+              <br></br>
             </div>
+
+            <div>
+            {
+              garage.garage[0].floorAval.map(floorCount => (
+                <p>Floor 2 : {floorCount}/{Math.ceil(garage.garage[0].totalSpots/4)}</p>
+              ))
+            }
+            </div>
+
             <hr className="my-4" />
             <p><b>Spot Availability</b></p>
             <div>
