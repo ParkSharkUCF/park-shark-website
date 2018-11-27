@@ -32,6 +32,7 @@ class Garage extends Component {
     garage.garage[0].occupied = occupied[garage.garage[0].name];
 
     console.log(garage.garage[0].floorAval)
+    garage.garage[0].floorC = 1;
 
     this.setState({
       garage,
@@ -59,7 +60,7 @@ class Garage extends Component {
             <div>
             {
               garage.garage[0].floorAval.map(floorCount => (
-                <p>Floor 2 : {floorCount}/{Math.ceil(garage.garage[0].totalSpots/4)}</p>
+                <p>Floor {garage.garage[0].floorC++} : {floorCount}/{Math.ceil(garage.garage[0].totalSpots/4)}</p>
               ))
             }
             </div>
