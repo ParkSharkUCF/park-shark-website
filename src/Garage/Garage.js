@@ -47,6 +47,11 @@ class Garage extends Component {
         <div className="row">
           <div className="jumbotron col-12">
             <h5 className="display-3" style={{fontSize: 40 + 'px'}}>Parking Garage {garage.garage[0].name}</h5>
+            {garage.garage[0].enabled ? (
+              <p></p>
+            ) : (
+              <p style={{fontSize: 40 + 'px'}}>CURRENTLY DISABLED</p>
+            )}
             <p className="lead"></p>
             <hr className="my-4" />
             <p style={{fontSize: 20 + 'px'}}>{garage.garage[0].totalSpots - garage.garage[0].occupied} remaining spots out of {garage.garage[0].totalSpots}</p>
