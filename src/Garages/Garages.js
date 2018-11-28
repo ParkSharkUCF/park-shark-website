@@ -45,7 +45,7 @@ class Garages extends Component {
                     <div className="card-header">Parking Garage {garage.name}</div>
                     <div className="card-body">
                       {garage.enabled ? (
-                        <h4 className="card-title">Availability {garage.occupied}/{garage.totalSpots}</h4>
+                        <h4 className="card-title">Availability {garage.totalSpots - garage.occupied}/{garage.totalSpots}</h4>
                       ) : (
                         <h4 className="card-title">DISABLED</h4>
                       )}
